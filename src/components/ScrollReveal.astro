@@ -1,0 +1,24 @@
+<script>
+  // Scroll Reveal — add class "reveal" to any element you want animated
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  // Observe all elements with .reveal class
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Also add staggered delays to siblings with .reveal-stagger
+  document.querySelectorAll('.reveal-stagger').forEach(group => {
+    const children = group.querySelectorAll('.reveal');
+    children.forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>

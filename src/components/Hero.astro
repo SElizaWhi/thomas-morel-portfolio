@@ -1,0 +1,288 @@
+<section class="hero">
+  <!-- <div class="hero-badge">Disponible</div> -->
+
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-subtitle uppercase" data-i18n="hero.subtitle">Web design · Graphisme · Photographie</p>
+
+      <h1 class="hero-title">
+        <span data-i18n-html="hero.title.main">Je crée des<br />expériences visuelles<br /></span><span class="hero-highlight" data-i18n="hero.title.highlight">qui marquent.</span>
+      </h1>
+
+      <p class="hero-desc" data-i18n="hero.desc">
+        Designer multidisciplinaire basé à Nîmes — je conçois des identités
+        visuelles, sites web et contenus photo/vidéo pour des marques
+        qui veulent se démarquer.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#projets" class="btn btn-primary" data-i18n="hero.cta1">Voir mes projets</a>
+        <a href="#contact" class="btn btn-secondary" data-i18n="hero.cta2">Me contacter</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-wrapper">
+      <div class="hero-photo-frame">
+        <div class="sticker sticker-circle"></div>
+        <div class="sticker sticker-square"></div>
+        <svg class="sticker sticker-star" width="36" height="36" viewBox="0 0 24 24">
+          <polygon points="12,1 15,9 23,9 17,14 19,22 12,17.5 5,22 7,14 1,9 9,9" fill="#EE4266" stroke="#1A1A1A" stroke-width="1.5"/>
+        </svg>
+        <div class="sticker sticker-dot"></div>
+        <svg class="sticker sticker-triangle" width="30" height="28" viewBox="0 0 28 26">
+          <polygon points="14,2 26,24 2,24" fill="#45B7D1" stroke="#1A1A1A" stroke-width="1.5"/>
+        </svg>
+
+        <div class="hero-photo">
+          <img src="/images/thomas-profile.png" alt="Thomas Morel" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span data-i18n="hero.scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style>
+.hero {
+    min-height: 100vh;
+    padding: 0 4rem;
+    padding-top: 2rem;
+    background: var(--cream);
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+  /* .hero-badge {
+    position: absolute;
+    top: 24px;
+    right: 60px;
+    background: var(--noir);
+    color: var(--cream);
+    padding: 6px 18px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border: var(--border);
+    border-radius: 8px;
+    z-index: 2;
+  } */
+
+.hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    width: 100%;
+    padding: 6rem 0 4rem;
+}
+
+  .hero-text {
+    flex: 1.2;
+    min-width: 0;
+  }
+
+  .hero-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.4rem, 5.5vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    color: var(--text);
+    letter-spacing: -3px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-highlight {
+    background: var(--ambre);
+    color: var(--cream);
+    padding: 0 14px;
+    display: inline-block;
+  }
+
+  :global([data-theme="dark"]) .hero-highlight {
+    color: #1A1A1A;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+  }
+
+  /* --- Photo --- */
+  .hero-photo-wrapper {
+    flex: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-photo-frame {
+    position: relative;
+  }
+
+  .hero-photo {
+    width: clamp(220px, 20vw, 340px);
+    height: clamp(300px, 28vw, 460px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* --- Stickers --- */
+  .sticker {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .sticker-circle {
+    width: 42px;
+    height: 42px;
+    background: var(--violet);
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    top: -16px;
+    right: -22px;
+  }
+
+  .sticker-square {
+    width: 32px;
+    height: 32px;
+    background: var(--jaune);
+    border: 3px solid var(--border-color);
+    bottom: 60px;
+    left: -18px;
+    transform: rotate(15deg);
+  }
+
+  .sticker-star {
+    top: 40%;
+    right: -26px;
+  }
+
+  .sticker-dot {
+    width: 20px;
+    height: 20px;
+    background: var(--vert);
+    border: 2.5px solid var(--border-color);
+    border-radius: 50%;
+    bottom: -8px;
+    right: 50px;
+  }
+
+  .sticker-triangle {
+    top: 18%;
+    left: -22px;
+  }
+
+  /* --- Scroll indicator --- */
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-scroll span {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+  }
+
+  .scroll-line {
+    width: 2px;
+    height: 40px;
+    background: var(--border-color);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: var(--ambre);
+    animation: scrollDown 1.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { top: -40px; }
+    50% { top: 40px; }
+    100% { top: -40px; }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 0 1.5rem;
+      min-height: 100svh;
+    }
+
+    .hero-badge {
+      right: 20px;
+      top: 16px;
+    }
+
+    .hero-inner {
+      flex-direction: column-reverse;
+      gap: 2rem;
+      padding: 5rem 0 6rem;
+      align-items: flex-start;
+    }
+
+    .hero-photo-wrapper {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .hero-photo {
+      width: 160px;
+      height: 220px;
+    }
+
+    .hero-ctas {
+      flex-direction: column;
+    }
+
+    .hero-ctas .btn {
+      text-align: center;
+    }
+
+    .hero-scroll {
+      bottom: 1.5rem;
+    }
+  }
+</style>

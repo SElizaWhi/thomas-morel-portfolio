@@ -1,11 +1,47 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import ToolBar from '../components/ToolBar.astro';
+import ProjectGrid from '../components/ProjectGrid.astro';
+import About from '../components/About.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 ---
 
 <Layout>
-	<Welcome />
+  <!-- Fullscreen hero with navbar -->
+  <header class="hero-section">
+    <div class="nav-wrapper">
+      <Navbar />
+    </div>
+    <Hero />
+  </header>
+
+  <!-- Rest of content -->
+  <main class="container content-after-hero">
+    <div class="reveal"><ToolBar /></div>
+    <div class="reveal"><ProjectGrid /></div>
+    <div class="reveal"><About /></div>
+    <div class="reveal"><PhotoGallery /></div>
+    <div class="reveal"><Contact /></div>
+    <Footer />
+  </main>
+
+  <!-- Scroll reveal observer -->
+  <script is:inline>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </Layout>

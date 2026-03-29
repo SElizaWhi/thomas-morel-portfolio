@@ -1,0 +1,146 @@
+---
+const { projet } = Astro.props;
+
+const shapeMap = {
+  circle: (color, size) =>
+    `<div style="width:${size}px;height:${size}px;background:${color};border:3px solid var(--border-color);border-radius:50%"></div>`,
+  diamond: (color, size) =>
+    `<div style="width:${size * 0.8}px;height:${size * 0.8}px;background:${color};border:3px solid var(--border-color);transform:rotate(45deg)"></div>`,
+  hexagon: (color, size) =>
+    `<svg width="${size}" height="${size}" viewBox="0 0 44 40"><polygon points="22,2 42,14 42,32 22,38 2,32 2,14" fill="${color}" stroke="var(--border-color)" stroke-width="2.5"/></svg>`,
+  triangle: (color, size) =>
+    `<svg width="${size}" height="${size}" viewBox="0 0 40 38"><polygon points="20,2 38,36 2,36" fill="${color}" stroke="var(--border-color)" stroke-width="2.5"/></svg>`,
+  square: (color, size) =>
+    `<div style="width:${size * 0.7}px;height:${size * 0.7}px;background:${color};border:3px solid var(--border-color);transform:rotate(12deg)"></div>`,
+  star: (color, size) =>
+    `<svg width="${size * 0.6}" height="${size * 0.6}" viewBox="0 0 24 24"><polygon points="12,1 15,9 23,9 17,14 19,22 12,17.5 5,22 7,14 1,9 9,9" fill="${color}" stroke="var(--border-color)" stroke-width="2"/></svg>`,
+};
+
+const aspectClass =
+  projet.size === "large"
+    ? "aspect-landscape"
+    : projet.size === "tall"
+      ? "aspect-portrait"
+      : "aspect-square";
+---
+
+<article class={`project-card card-hover bb ${aspectClass}`}>
+  <div class="card-visual" style={`background: ${projet.bgColor};`}>
+    {
+      projet.image ? (
+        <img
+          src={projet.image}
+          alt={projet.title}
+          class="card-image"
+          loading="lazy"
+          onerror="this.style.display='none'"
+        />
+      ) : null
+    }
+
+    <div class="card-shapes">
+      <div
+        class="shape-main"
+        set:html={shapeMap[projet.shapeType]?.(projet.shapeColor, 70) || ""}
+      />
+      <div
+        class="shape-accent"
+        set:html={shapeMap[projet.accentType]?.(projet.accentColor, 30) || ""}
+      />
+      {
+        projet.starColor && (
+          <div
+            class="shape-star"
+            set:html={shapeMap.star(projet.starColor, 40)}
+          />
+        )
+      }
+    </div>
+
+    <div class="card-info">
+      <h3 class="card-title">{projet.title}</h3>
+      <p class="card-category">{projet.category}</p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .card-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .aspect-landscape .card-visual {
+    aspect-ratio: 4/3;
+  }
+  .aspect-portrait .card-visual {
+    aspect-ratio: 3/4;
+  }
+  .aspect-square .card-visual {
+    aspect-ratio: 1;
+  }
+
+  .card-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  /* Les formes sont visibles quand il n'y a pas d'image */
+  .card-shapes {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shape-accent {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+  }
+
+  .shape-star {
+    position: absolute;
+    bottom: 18px;
+    left: 14px;
+  }
+
+  .card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 10px 14px;
+    background: #1a1a1a;
+    color: #fffdf5;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .card-category {
+    font-size: 11px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .project-card:hover .card-info {
+    color: var(--ambre);
+  }
+</style>

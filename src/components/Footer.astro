@@ -1,0 +1,59 @@
+---
+const socials = [
+  { label: "Instagram", href: "https://instagram.com/" },
+  { label: "Behance", href: "https://behance.net/" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/" },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <span class="footer-copy">Thomas Morel {year}</span>
+
+  <div class="footer-links">
+    {socials.map(s => (
+      <a href={s.href} target="_blank" rel="noopener noreferrer" class="footer-link">
+        {s.label}
+      </a>
+    ))}
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-link {
+    font-weight: 600;
+    color: var(--text);
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover {
+    color: var(--ambre);
+  }
+
+  @media (max-width: 640px) {
+    .footer {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+  }
+</style>

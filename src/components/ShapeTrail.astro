@@ -1,0 +1,107 @@
+<div id="trail-container"></div>
+
+<script>
+  (function(){
+    const colors = ['#F5A623','#EE4266','#45B7D1','#FFD23F','#9B5DE5','#3BCEAC'];
+    const types = ['circle','square','triangle','star','hexagon'];
+    const TRAIL_COUNT = 16;
+    const trail = [];
+    const positions = [];
+    let mouseX = -200, mouseY = -200;
+
+    function makeSVG(type, color, sz) {
+      const h = sz / 2;
+      let s = `<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" xmlns="http://www.w3.org/2000/svg">`;
+      if (type === 'circle') {
+        s += `<circle cx="${h}" cy="${h}" r="${h-1}" fill="${color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+      } else if (type === 'square') {
+        s += `<rect x="1" y="1" width="${sz-2}" height="${sz-2}" fill="${color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+      } else if (type === 'triangle') {
+        s += `<polygon points="${h},1 ${sz-1},${sz-1} 1,${sz-1}" fill="${color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+      } else if (type === 'star') {
+        const pts = [];
+        for (let i = 0; i < 10; i++) {
+          const a = Math.PI/2 + i * Math.PI/5;
+          const r = i % 2 === 0 ? (h - 1) : (h * 0.38);
+          pts.push(`${(h + r * Math.cos(-a)).toFixed(1)},${(h + r * Math.sin(-a)).toFixed(1)}`);
+        }
+        s += `<polygon points="${pts.join(' ')}" fill="${color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+      } else {
+        const pts = [];
+        for (let j = 0; j < 6; j++) {
+          const a = Math.PI/3 * j - Math.PI/6;
+          pts.push(`${(h + (h-1) * Math.cos(a)).toFixed(1)},${(h + (h-1) * Math.sin(a)).toFixed(1)}`);
+        }
+        s += `<polygon points="${pts.join(' ')}" fill="${color}" stroke="#1a1a1a" stroke-width="1.5"/>`;
+      }
+      s += '</svg>';
+      return s;
+    }
+
+    // Sizes decrease rapidly — first shape is 14px, last is ~4px
+    for (let i = 0; i < TRAIL_COUNT; i++) {
+      const el = document.createElement('div');
+      el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;';
+      const sz = Math.round(14 - i * 0.6);
+      const clampedSz = Math.max(sz, 4);
+      el.innerHTML = makeSVG(types[i % types.length], colors[i % colors.length], clampedSz);
+      el.style.width = clampedSz + 'px';
+      el.style.height = clampedSz + 'px';
+      document.body.appendChild(el);
+      trail.push({
+        el,
+        rot: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 6,
+        size: clampedSz
+      });
+      positions.push({ x: -200, y: -200 });
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      mouseX = -200;
+      mouseY = -200;
+    });
+
+    function animate() {
+      for (let i = 0; i < TRAIL_COUNT; i++) {
+        let tx, ty;
+        if (i === 0) { tx = mouseX; ty = mouseY; }
+        else { tx = positions[i-1].x; ty = positions[i-1].y; }
+
+        // Tight follow for first shapes, looser for tail — shooting star feel
+        const ease = Math.max(0.04, 0.35 - i * 0.02);
+
+        positions[i].x += (tx - positions[i].x) * ease;
+        positions[i].y += (ty - positions[i].y) * ease;
+
+        trail[i].rot += trail[i].rotSpeed;
+
+        const dx = mouseX - positions[i].x;
+        const dy = mouseY - positions[i].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        // Opacity: invisible near cursor, peaks in middle, fades at tail
+        const fadeIn = Math.min(1, dist * 0.03);
+        const fadeOut = Math.max(0, 1 - i / TRAIL_COUNT);
+        const op = mouseX < -100 ? 0 : fadeIn * fadeOut * 0.85;
+
+        // Scale: starts small near cursor, grows slightly, then shrinks at tail
+        const sc = Math.max(0.2, fadeOut * 0.9);
+
+        const hw = trail[i].size / 2;
+
+        trail[i].el.style.transform =
+          `translate(${(positions[i].x - hw).toFixed(0)}px,${(positions[i].y - hw).toFixed(0)}px) rotate(${Math.round(trail[i].rot)}deg) scale(${sc.toFixed(2)})`;
+        trail[i].el.style.opacity = op.toFixed(2);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  })();
+</script>

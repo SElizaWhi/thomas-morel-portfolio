@@ -1,0 +1,211 @@
+/* ============================================
+   THOMAS MOREL — BAZAR SOLAIRE
+   Global Styles & Variables
+   ============================================ */
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Palette Bazar Solaire Vivid --- */
+:root {
+  --ambre: #F5A623;
+  --framboise: #EE4266;
+  --bleu: #45B7D1;
+  --jaune: #FFD23F;
+  --violet: #9B5DE5;
+  --vert: #3BCEAC;
+
+  --noir: #1A1A1A;
+  --cream: #FFFDF5;
+  --gris-1: #5F5E5A;
+  --gris-2: #B4B2A9;
+  --gris-3: #888780;
+
+  --bg: var(--cream);
+  --text: var(--noir);
+  --text-muted: var(--gris-1);
+  --border-color: var(--noir);
+
+  --border: 3px solid var(--border-color);
+  --radius: 10px;
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --max-width: 100%;
+  --content-width: 1080px;
+  --gutter: 3rem;
+}
+
+/* --- Dark Mode --- */
+[data-theme="dark"] {
+  --bg: #1A1A1A;
+  --text: #FFFDF5;
+  --text-muted: #B4B2A9;
+  --border-color: #FFFDF5;
+  --cream: #1A1A1A;
+  --noir: #FFFDF5;
+}
+
+/* --- Base --- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Utilities --- */
+.container {
+  width: 100%;
+  padding: 0 var(--gutter);
+}
+
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--gris-2);
+  padding-bottom: 6px;
+}
+
+/* --- Neo-brutalist border --- */
+.bb {
+  border: var(--border);
+}
+
+/* --- Cards hover effect --- */
+.card-hover {
+  transition: transform 0.15s, outline 0.15s;
+  outline: 0px solid transparent;
+  cursor: pointer;
+}
+
+.card-hover:hover {
+  transform: translate(-2px, -2px);
+  outline: 3px solid var(--ambre);
+}
+
+/* --- Button styles --- */
+.btn {
+  display: inline-block;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+
+.btn:hover {
+  transform: scale(1.04);
+}
+
+.btn-primary {
+  background: var(--noir);
+  color: var(--cream);
+}
+
+.btn-secondary {
+  background: var(--cream);
+  color: var(--noir);
+}
+
+/* --- Tag hover (skills) --- */
+.tag {
+  border: 2.5px solid var(--border-color);
+  padding: 4px 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text);
+  border-radius: 8px;
+  background: var(--cream);
+  transition: background 0.15s, color 0.15s;
+  cursor: default;
+}
+
+.tag:hover {
+  background: var(--noir);
+  color: var(--cream);
+}
+
+/* --- Scroll Reveal base --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Selection color --- */
+::selection {
+  background: var(--ambre);
+  color: var(--noir);
+}
+
+/* --- Fullscreen hero layout --- */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-wrapper {
+  padding: 2rem 4rem 0;
+}
+
+.content-after-hero {
+  padding-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .nav-wrapper {
+    padding: 1rem 1.5rem 0;
+  }
+
+  .content-after-hero {
+    padding-top: 2.5rem;
+  }
+}

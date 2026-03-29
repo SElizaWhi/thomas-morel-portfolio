@@ -1,0 +1,244 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+const photosDir = path.join(process.cwd(), 'public/images/photos');
+const validExts = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
+
+const galleries = fs.readdirSync(photosDir)
+  .filter(d => fs.statSync(path.join(photosDir, d)).isDirectory())
+  .sort()
+  .map(dir => ({
+    name: dir.replace(/[-_]/g, ' '),
+    images: fs.readdirSync(path.join(photosDir, dir))
+      .filter(f => validExts.has(path.extname(f).toLowerCase()))
+      .sort()
+      .map(f => ({
+        src: `/images/photos/${dir}/${f}`,
+        alt: f.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
+      })),
+  }))
+  .filter(g => g.images.length > 0);
+---
+
+<section id="photo">
+  <p class="section-label" data-i18n="photo.label">Photographie</p>
+
+  <div class="photo-grid">
+    {galleries.map((gallery, i) => (
+      <figure class="hover-gallery photo-item" data-index={i}>
+        {gallery.images.map(img => (
+          <img src={img.src} alt={img.alt} loading="lazy" class="gallery-img" />
+        ))}
+      </figure>
+    ))}
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lb-close" aria-label="Fermer">&times;</button>
+  <button class="lb-prev" id="lb-prev" aria-label="Précédent">&#8249;</button>
+  <button class="lb-next" id="lb-next" aria-label="Suivant">&#8250;</button>
+  <div class="lb-content">
+    <img id="lb-img" src="" alt="" />
+  </div>
+  <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+<style>
+  .hover-gallery {
+    --items: 1;
+    grid-template-columns: repeat(var(--items), 1fr);
+    grid-template-rows: 1fr;
+    gap: 1px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: grid;
+  }
+  .hover-gallery:has(> :nth-child(3))  { --items: 2; }
+  .hover-gallery:has(> :nth-child(4))  { --items: 3; }
+  .hover-gallery:has(> :nth-child(5))  { --items: 4; }
+  .hover-gallery:has(> :nth-child(6))  { --items: 5; }
+  .hover-gallery:has(> :nth-child(7))  { --items: 6; }
+  .hover-gallery:has(> :nth-child(8))  { --items: 7; }
+  .hover-gallery:has(> :nth-child(9))  { --items: 8; }
+  .hover-gallery:has(> :nth-child(10)) { --items: 9; }
+
+  .hover-gallery > * {
+    opacity: 0;
+    object-fit: cover;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .hover-gallery > *:first-child       { opacity: 1; grid-column: 1 / -1; }
+  .hover-gallery > *:nth-child(2)  { grid-column: 1; }
+  .hover-gallery > *:nth-child(3)  { grid-column: 2; }
+  .hover-gallery > *:nth-child(4)  { grid-column: 3; }
+  .hover-gallery > *:nth-child(5)  { grid-column: 4; }
+  .hover-gallery > *:nth-child(6)  { grid-column: 5; }
+  .hover-gallery > *:nth-child(7)  { grid-column: 6; }
+  .hover-gallery > *:nth-child(8)  { grid-column: 7; }
+  .hover-gallery > *:nth-child(9)  { grid-column: 8; }
+  .hover-gallery > *:nth-child(10) { grid-column: 9; }
+
+  .hover-gallery > *:hover             { opacity: 1; grid-column: 1 / -1; }
+  .hover-gallery:has(:hover) > *:first-child { display: none; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .photo-item {
+    aspect-ratio: 1;
+    border: var(--border);
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(26, 26, 26, 0.95);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .lightbox.active {
+    display: flex;
+  }
+
+  .lb-content {
+    max-width: 90vw;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lb-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border: var(--border);
+    border-color: #FFFDF5;
+  }
+
+  .lb-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: none;
+    border: none;
+    color: #FFFDF5;
+    font-size: 36px;
+    cursor: pointer;
+    z-index: 10001;
+    transition: transform 0.12s;
+  }
+
+  .lb-close:hover {
+    transform: scale(1.2);
+  }
+
+  .lb-prev, .lb-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #FFFDF5;
+    font-size: 48px;
+    cursor: pointer;
+    padding: 0 16px;
+    z-index: 10001;
+    transition: transform 0.12s;
+  }
+
+  .lb-prev { left: 12px; }
+  .lb-next { right: 12px; }
+
+  .lb-prev:hover, .lb-next:hover {
+    transform: translateY(-50%) scale(1.2);
+  }
+
+  .lb-counter {
+    color: #FFFDF5;
+    font-size: 13px;
+    margin-top: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+</style>
+
+<script>
+  const figures = document.querySelectorAll<HTMLElement>('.photo-item');
+  const lightbox = document.getElementById('lightbox')!;
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement;
+  const lbClose = document.getElementById('lb-close')!;
+  const lbPrev = document.getElementById('lb-prev')!;
+  const lbNext = document.getElementById('lb-next')!;
+  const lbCounter = document.getElementById('lb-counter')!;
+
+  const srcs = Array.from(figures).map(fig => {
+    const img = fig.querySelector<HTMLImageElement>('img');
+    return img ? img.src : '';
+  }).filter(Boolean);
+
+  let current = 0;
+
+  function openLightbox(index: number) {
+    current = index;
+    lbImg.src = srcs[current];
+    lbCounter.textContent = `${current + 1} / ${srcs.length}`;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function navigate(dir: number) {
+    current = (current + dir + srcs.length) % srcs.length;
+    lbImg.src = srcs[current];
+    lbCounter.textContent = `${current + 1} / ${srcs.length}`;
+  }
+
+  figures.forEach((fig, i) => {
+    fig.addEventListener('click', () => openLightbox(i));
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => navigate(-1));
+  lbNext.addEventListener('click', () => navigate(1));
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+</script>

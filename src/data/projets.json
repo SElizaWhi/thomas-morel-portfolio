@@ -1,0 +1,39 @@
+[
+  {
+    "id": "affiches",
+    "title": "Affiches",
+    "category": "Graphic design · 2023",
+    "image": "/images/projets/poster_batman.png",
+    "bgColor": "#FFF3E0",
+    "shapeColor": "#45B7D1",
+    "shapeType": "circle",
+    "accentColor": "#FFD23F",
+    "accentType": "square",
+    "starColor": "#EE4266",
+    "size": "small"
+  },
+  {
+    "id": "joy",
+    "title": "Joy",
+    "category": "Identité Visuelle · 2023",
+    "image": "/images/projets/joy_affiche.png",
+    "bgColor": "#F3EAFF",
+    "shapeColor": "#9B5DE5",
+    "shapeType": "diamond",
+    "accentColor": "#3BCEAC",
+    "accentType": "circle",
+    "size": "small"
+  },
+  {
+    "id": "greenup",
+    "title": "GreenUp",
+    "category": "Web design",
+    "image": "/images/projets/MockUps.png",
+    "bgColor": "#E0FFF5",
+    "shapeColor": "#3BCEAC",
+    "shapeType": "hexagon",
+    "accentColor": "#F5A623",
+    "accentType": "circle",
+    "size": "small"
+  }
+]

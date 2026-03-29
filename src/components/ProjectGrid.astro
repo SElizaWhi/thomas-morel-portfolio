@@ -1,0 +1,65 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import ProjectCard from './ProjectCard.astro';
+import projets from '../data/projets.json';
+
+const projetsDir = path.join(process.cwd(), 'public/images/projets');
+const validExts = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
+
+const imageFiles = fs.existsSync(projetsDir)
+  ? fs.readdirSync(projetsDir).filter(f => validExts.has(path.extname(f).toLowerCase()))
+  : [];
+
+const withImages = projets.map(p => ({
+  ...p,
+  image: imageFiles.find(f => path.basename(f, path.extname(f)) === p.id)
+    ? `/images/projets/${imageFiles.find(f => path.basename(f, path.extname(f)) === p.id)}`
+    : p.image ?? null,
+}));
+
+const topRow = withImages.filter(p => p.size === 'large' || p.size === 'tall');
+const bottomRow = withImages.filter(p => p.size === 'small');
+---
+
+<section id="projets">
+  <p class="section-label" data-i18n="projects.label">Projets sélectionnés</p>
+
+  <div class="grid-top">
+    {topRow.map(projet => (
+      <ProjectCard projet={projet} />
+    ))}
+  </div>
+
+  <div class="grid-bottom">
+    {bottomRow.map(projet => (
+      <ProjectCard projet={projet} />
+    ))}
+  </div>
+</section>
+
+<style>
+  section {
+    margin-bottom: 3rem;
+  }
+
+  .grid-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .grid-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .grid-top,
+    .grid-bottom {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,362 @@
+---
+const links = [
+  { label: "Travaux", href: "#projets", key: "nav.work" },
+  { label: "Photo", href: "#photo", key: "nav.photo" },
+  { label: "À propos", href: "#about", key: "nav.about" },
+  { label: "Contact", href: "#contact", key: "nav.contact" },
+];
+---
+
+<!-- Full navbar (visible in hero) -->
+<nav class="navbar" id="navbar-full">
+  <a href="/" class="nav-logo">THOMAS MOREL</a>
+
+  <div class="nav-links">
+    {links.map(link => (
+      <a href={link.href} class="nav-link" data-i18n={link.key}>{link.label}</a>
+    ))}
+
+    <button class="nav-lang-toggle" id="lang-btn" onclick="toggleLang()" aria-label="Switch language">EN</button>
+
+    <button class="nav-theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Fixed burger (appears on scroll) -->
+<div class="burger-nav" id="burger-nav">
+  <button class="burger-btn" id="burger-btn" aria-label="Menu">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </button>
+
+  <div class="burger-menu" id="burger-menu">
+    <div class="burger-menu-inner">
+      <a href="/" class="burger-logo">TM</a>
+
+      <div class="burger-links">
+        {links.map(link => (
+          <a href={link.href} class="burger-link" data-i18n={link.key}>{link.label}</a>
+        ))}
+      </div>
+
+      <div class="burger-actions">
+        <button class="nav-lang-toggle burger-lang" id="lang-btn-burger" onclick="toggleLang()" aria-label="Switch language">EN</button>
+        <button class="nav-theme-toggle burger-theme" onclick="toggleTheme()" aria-label="Changer de thème">
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* === FULL NAVBAR === */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 0;
+  }
+
+  .nav-logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .nav-link {
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .nav-link:hover {
+    color: var(--ambre);
+  }
+
+  .nav-lang-toggle {
+    background: none;
+    border: 1.5px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: inherit;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-lang-toggle:hover {
+    color: var(--ambre);
+    border-color: var(--ambre);
+  }
+
+  .burger-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.15s;
+  }
+
+  .nav-theme-toggle:hover {
+    transform: scale(1.15);
+  }
+
+  .icon-sun { display: none; }
+  .icon-moon { display: block; }
+  :global([data-theme="dark"]) .icon-sun { display: block; }
+  :global([data-theme="dark"]) .icon-moon { display: none; }
+
+  /* === BURGER NAV (fixed, hidden by default) === */
+  .burger-nav {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 9000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .burger-nav.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .burger-btn {
+    width: 48px;
+    height: 48px;
+    background: var(--noir);
+    border: var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 12px;
+    transition: transform 0.12s;
+    position: relative;
+    z-index: 9002;
+  }
+
+  .burger-btn:hover {
+    transform: scale(1.06);
+  }
+
+  .burger-line {
+    display: block;
+    width: 22px;
+    height: 2.5px;
+    background: var(--cream);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* Burger X state */
+  .burger-nav.open .burger-line:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .burger-nav.open .burger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .burger-nav.open .burger-line:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  /* === BURGER MENU PANEL === */
+  .burger-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100vh;
+    background: var(--cream);
+    border-left: var(--border);
+    z-index: 9001;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+
+  .burger-nav.open .burger-menu {
+    transform: translateX(0);
+  }
+
+  .burger-menu-inner {
+    padding: 5rem 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .burger-logo {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .burger-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .burger-link {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gris-2);
+    transition: color 0.15s, padding-left 0.15s;
+  }
+
+  .burger-link:hover {
+    color: var(--ambre);
+    padding-left: 8px;
+  }
+
+  .burger-theme {
+    align-self: flex-start;
+  }
+
+  /* Overlay behind menu */
+  .burger-nav.open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.4);
+    z-index: 9000;
+  }
+
+  /* === MOBILE: always use burger === */
+  @media (max-width: 640px) {
+    .navbar {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .nav-links {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const burgerNav = document.getElementById('burger-nav');
+    const burgerBtn = document.getElementById('burger-btn');
+    const burgerMenu = document.getElementById('burger-menu');
+    const burgerLinks = document.querySelectorAll('.burger-link');
+
+    // Show burger when scrolled past hero
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          const scrollY = window.scrollY;
+          const threshold = window.innerHeight * 0.6;
+
+          if (scrollY > threshold) {
+            burgerNav.classList.add('visible');
+          } else {
+            burgerNav.classList.remove('visible');
+            burgerNav.classList.remove('open');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Toggle menu
+    burgerBtn.addEventListener('click', function() {
+      burgerNav.classList.toggle('open');
+    });
+
+    // Close on overlay click
+    burgerNav.addEventListener('click', function(e) {
+      if (e.target === burgerNav || e.target === burgerNav.querySelector('::before')) {
+        burgerNav.classList.remove('open');
+      }
+    });
+
+    // Close on link click
+    burgerLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        burgerNav.classList.remove('open');
+      });
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        burgerNav.classList.remove('open');
+      }
+    });
+  })();
+</script>

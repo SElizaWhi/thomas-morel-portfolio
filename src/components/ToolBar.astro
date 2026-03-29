@@ -1,0 +1,61 @@
+---
+const tools = [
+  { label: "Fg", color: "#FFD23F", bgColor: "#FFD23F", isFigma: true },
+  { label: "Ps", color: "#45B7D1", bgColor: "#1A2F4F" },
+  { label: "Ai", color: "#F5A623", bgColor: "#3D1F00" },
+  { label: "Ae", color: "#9B5DE5", bgColor: "#2A1045" },
+  { label: "Id", color: "#EE4266", bgColor: "#3A0E20" },
+  { label: "Lr", color: "#3BCEAC", bgColor: "#0E3528" },
+  { label: "Pr", color: "#45B7D1", bgColor: "#1A3540" },
+];
+---
+
+<div class="toolbar">
+  {tools.map(tool => (
+    <div
+      class="tool-icon"
+      style={`background: ${tool.bgColor}; color: ${tool.color};`}
+    >
+      {tool.isFigma ? (
+        <svg width="20" height="20" viewBox="0 0 20 20">
+          <rect x="2" y="2" width="6" height="6" rx="1" fill="#EE4266" />
+          <rect x="12" y="2" width="6" height="6" rx="1" fill="#9B5DE5" />
+          <rect x="2" y="12" width="6" height="6" rx="1" fill="#45B7D1" />
+          <rect x="12" y="12" width="6" height="6" rx="1" fill="#3BCEAC" />
+        </svg>
+      ) : (
+        <span class="tool-label">{tool.label}</span>
+      )}
+    </div>
+  ))}
+</div>
+
+<style>
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tool-icon {
+    width: 48px;
+    height: 48px;
+    border: var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.12s;
+  }
+
+  .tool-icon:hover {
+    transform: scale(1.08);
+  }
+
+  .tool-label {
+    font-size: 16px;
+    font-weight: 700;
+  }
+</style>

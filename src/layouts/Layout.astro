@@ -1,23 +1,264 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+const { title = "Thomas Morel — Designer & Photographe" } = Astro.props;
+---
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Thomas Morel — Designer UX/UI, graphiste et photographe basé à Nîmes. Création d'identités visuelles, sites web et contenus photo/vidéo." />
+  <title>{title}</title>
+
+  <!-- Preload font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Prevent FOUC on dark mode and language -->
+  <script is:inline>
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    const lang = localStorage.getItem('lang') || 'fr';
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('data-lang', lang);
+  </script>
+</head>
+<body>
+  <slot />
+
+  <!-- i18n language switcher -->
+  <script is:inline>
+    (function () {
+      var translations = {
+        fr: {
+          "nav.work": "Travaux",
+          "nav.photo": "Photo",
+          "nav.about": "\u00C0 propos",
+          "nav.contact": "Contact",
+          "hero.subtitle": "Web design \u00B7 Graphisme \u00B7 Photographie",
+          "hero.title.main": "Je cr\u00E9e des<br />exp\u00E9riences visuelles<br />",
+          "hero.title.highlight": "qui marquent.",
+          "hero.desc": "Designer multidisciplinaire bas\u00E9 \u00E0 N\u00EEmes \u2014 je con\u00E7ois des identit\u00E9s visuelles, sites web et contenus photo/vid\u00E9o pour des marques qui veulent se d\u00E9marquer.",
+          "hero.cta1": "Voir mes projets",
+          "hero.cta2": "Me contacter",
+          "hero.scroll": "Scroll",
+          "projects.label": "Projets s\u00E9lectionn\u00E9s",
+          "photo.label": "Photographie",
+          "about.label": "\u00C0 propos",
+          "about.text": "Designer multidisciplinaire bas\u00E9 \u00E0 N\u00EEmes. Je con\u00E7ois des identit\u00E9s visuelles, sites web et contenus photo/vid\u00E9o pour des marques qui veulent se d\u00E9marquer.",
+          "contact.title": "Un projet en t\u00EAte\u00A0?",
+          "contact.subtitle": "Je suis disponible pour des collaborations freelance.<br />Bas\u00E9 \u00E0 N\u00EEmes \u2014 travaille partout.",
+          "contact.name": "Nom",
+          "contact.email": "Email",
+          "contact.name_placeholder": "Votre nom",
+          "contact.message": "Message",
+          "contact.message_placeholder": "Parlez-moi de votre projet...",
+          "contact.submit": "Envoyer \u2192",
+          "contact.email_btn": "Ou par email"
+        },
+        en: {
+          "nav.work": "Work",
+          "nav.photo": "Photo",
+          "nav.about": "About",
+          "nav.contact": "Contact",
+          "hero.subtitle": "Web design \u00B7 Graphics \u00B7 Photography",
+          "hero.title.main": "I create<br />visual experiences<br />",
+          "hero.title.highlight": "that last.",
+          "hero.desc": "Multidisciplinary designer based in N\u00EEmes \u2014 I design visual identities, websites and photo/video content for brands that want to stand out.",
+          "hero.cta1": "View my work",
+          "hero.cta2": "Get in touch",
+          "hero.scroll": "Scroll",
+          "projects.label": "Selected projects",
+          "photo.label": "Photography",
+          "about.label": "About",
+          "about.text": "Multidisciplinary designer based in N\u00EEmes. I design visual identities, websites and photo/video content for brands that want to stand out.",
+          "contact.title": "Have a project in mind?",
+          "contact.subtitle": "Available for freelance collaborations.<br />Based in N\u00EEmes \u2014 works everywhere.",
+          "contact.name": "Name",
+          "contact.email": "Email",
+          "contact.name_placeholder": "Your name",
+          "contact.message": "Message",
+          "contact.message_placeholder": "Tell me about your project...",
+          "contact.submit": "Send \u2192",
+          "contact.email_btn": "Or by email"
+        }
+      };
+
+      function applyLang(lang) {
+        var t = translations[lang];
+        if (!t) return;
+
+        document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('data-lang', lang);
+        localStorage.setItem('lang', lang);
+
+        // Update lang button labels
+        var langLabel = lang === 'fr' ? 'EN' : 'FR';
+        document.querySelectorAll('#lang-btn, #lang-btn-burger').forEach(function (btn) {
+          btn.textContent = langLabel;
+        });
+
+        // Text content
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) el.textContent = t[key];
+        });
+
+        // HTML content
+        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-html');
+          if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+
+        // Placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-placeholder');
+          if (t[key] !== undefined) el.setAttribute('placeholder', t[key]);
+        });
+      }
+
+      function toggleLang() {
+        var current = localStorage.getItem('lang') || 'fr';
+        applyLang(current === 'fr' ? 'en' : 'fr');
+      }
+
+      window.toggleLang = toggleLang;
+
+      // Apply saved language on load
+      var savedLang = localStorage.getItem('lang') || 'fr';
+      applyLang(savedLang);
+    })();
+  </script>
+
+  <!-- Dark mode toggle -->
+  <script is:inline>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+    window.toggleTheme = toggleTheme;
+  </script>
+
+  <!-- Shape trail cursor effect -->
+  <script is:inline>
+    (function () {
+      const colors = ['#F5A623','#EE4266','#45B7D1','#FFD23F','#9B5DE5','#3BCEAC'];
+      const types = ['circle','square','triangle','star','hexagon'];
+      const TRAIL_COUNT = 16;
+      const trail = [];
+      const positions = [];
+      let mouseX = -200, mouseY = -200;
+
+      function makeSVG(type, color, sz) {
+        const h = sz / 2;
+        let s = '<svg width="' + sz + '" height="' + sz + '" viewBox="0 0 ' + sz + ' ' + sz + '" xmlns="http://www.w3.org/2000/svg">';
+        if (type === 'circle') {
+          s += '<circle cx="' + h + '" cy="' + h + '" r="' + (h - 1) + '" fill="' + color + '" stroke="#1a1a1a" stroke-width="1.5"/>';
+        } else if (type === 'square') {
+          s += '<rect x="1" y="1" width="' + (sz - 2) + '" height="' + (sz - 2) + '" fill="' + color + '" stroke="#1a1a1a" stroke-width="1.5"/>';
+        } else if (type === 'triangle') {
+          s += '<polygon points="' + h + ',1 ' + (sz - 1) + ',' + (sz - 1) + ' 1,' + (sz - 1) + '" fill="' + color + '" stroke="#1a1a1a" stroke-width="1.5"/>';
+        } else if (type === 'star') {
+          var pts = [];
+          for (var k = 0; k < 10; k++) {
+            var a = Math.PI / 2 + k * Math.PI / 5;
+            var r = k % 2 === 0 ? (h - 1) : (h * 0.38);
+            pts.push((h + r * Math.cos(-a)).toFixed(1) + ',' + (h + r * Math.sin(-a)).toFixed(1));
+          }
+          s += '<polygon points="' + pts.join(' ') + '" fill="' + color + '" stroke="#1a1a1a" stroke-width="1.5"/>';
+        } else {
+          var pts2 = [];
+          for (var j = 0; j < 6; j++) {
+            var a2 = Math.PI / 3 * j - Math.PI / 6;
+            pts2.push((h + (h - 1) * Math.cos(a2)).toFixed(1) + ',' + (h + (h - 1) * Math.sin(a2)).toFixed(1));
+          }
+          s += '<polygon points="' + pts2.join(' ') + '" fill="' + color + '" stroke="#1a1a1a" stroke-width="1.5"/>';
+        }
+        s += '</svg>';
+        return s;
+      }
+
+      for (var i = 0; i < TRAIL_COUNT; i++) {
+        var el = document.createElement('div');
+        el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;opacity:0;will-change:transform,opacity;top:0;left:0;';
+        var sz = Math.max(Math.round(14 - i * 0.6), 4);
+        el.innerHTML = makeSVG(types[i % types.length], colors[i % colors.length], sz);
+        el.style.width = sz + 'px';
+        el.style.height = sz + 'px';
+        document.body.appendChild(el);
+        trail.push({ el: el, rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 6, size: sz });
+        positions.push({ x: -200, y: -200 });
+      }
+
+      document.addEventListener('mousemove', function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      document.addEventListener('mouseleave', function () {
+        mouseX = -200;
+        mouseY = -200;
+      });
+
+      function animate() {
+        for (var i = 0; i < TRAIL_COUNT; i++) {
+          var tx = i === 0 ? mouseX : positions[i - 1].x;
+          var ty = i === 0 ? mouseY : positions[i - 1].y;
+          var ease = Math.max(0.02, 0.18 - i * 0.01);
+          positions[i].x += (tx - positions[i].x) * ease;
+          positions[i].y += (ty - positions[i].y) * ease;
+          trail[i].rot += trail[i].rotSpeed;
+          var dx = mouseX - positions[i].x;
+          var dy = mouseY - positions[i].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var fadeIn = Math.min(1, dist * 0.03);
+          var fadeOut = Math.max(0, 1 - i / TRAIL_COUNT);
+          var op = mouseX < -100 ? 0 : fadeIn * fadeOut * 0.85;
+          var sc = Math.max(0.2, fadeOut * 0.9);
+          var hw = trail[i].size / 2;
+          trail[i].el.style.transform = 'translate(' + (positions[i].x - hw).toFixed(0) + 'px,' + (positions[i].y - hw).toFixed(0) + 'px) rotate(' + Math.round(trail[i].rot) + 'deg) scale(' + sc.toFixed(2) + ')';
+          trail[i].el.style.opacity = op.toFixed(2);
+        }
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
+  </script>
+
+  <!-- Scroll reveal -->
+  <script is:inline>
+    (function () {
+      function initReveal() {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          observer.observe(el);
+        });
+
+        document.querySelectorAll('.reveal-stagger').forEach(function (group) {
+          group.querySelectorAll('.reveal').forEach(function (child, i) {
+            child.style.transitionDelay = (i * 0.08) + 's';
+          });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
+    })();
+  </script>
+</body>
+</html>
