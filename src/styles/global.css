@@ -4,7 +4,9 @@
    ============================================ */
 
 /* --- Reset --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -12,17 +14,17 @@
 
 /* --- Palette Bazar Solaire Vivid --- */
 :root {
-  --ambre: #F5A623;
-  --framboise: #EE4266;
-  --bleu: #45B7D1;
-  --jaune: #FFD23F;
-  --violet: #9B5DE5;
-  --vert: #3BCEAC;
+  --ambre: #f5a623;
+  --framboise: #ee4266;
+  --bleu: #45b7d1;
+  --jaune: #ffd23f;
+  --violet: #9b5de5;
+  --vert: #3bceac;
 
-  --noir: #1A1A1A;
-  --cream: #FFFDF5;
-  --gris-1: #5F5E5A;
-  --gris-2: #B4B2A9;
+  --noir: #1a1a1a;
+  --cream: #fffdf5;
+  --gris-1: #5f5e5a;
+  --gris-2: #b4b2a9;
   --gris-3: #888780;
 
   --bg: var(--cream);
@@ -30,25 +32,68 @@
   --text-muted: var(--gris-1);
   --border-color: var(--noir);
 
-  --border: 3px solid var(--border-color);
+  --border: 4px solid var(--border-color);
   --radius: 10px;
 
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
 
   --max-width: 100%;
   --content-width: 1080px;
-  --gutter: 3rem;
 }
 
-/* --- Dark Mode --- */
-[data-theme="dark"] {
-  --bg: #1A1A1A;
-  --text: #FFFDF5;
-  --text-muted: #B4B2A9;
-  --border-color: #FFFDF5;
-  --cream: #1A1A1A;
-  --noir: #FFFDF5;
+/* --- fun Mode --- */
+[data-theme="fun"] {
+  --font-body: "Coiny", system-ui, -apple-system, sans-serif;
+  --font-heading: "Coiny", system-ui, -apple-system, sans-serif;
+  --bg: #fffdf5;
+  --cream: #ffffff;
+  --noir: #1a1a1a;
+  --text: #1a1a1a;
+  --text-muted: #1a1a1a;
+  --border-color: #1a1a1a;
+  --gris-2: #1a1a1a;
+}
+
+/* Sections backgrounds */
+[data-theme="fun"] #projets {
+  background: var(--jaune);
+  padding: 3rem 2rem 4rem;
+}
+[data-theme="fun"] #photo {
+  background: var(--vert);
+  padding: 3rem 2rem 4rem;
+}
+[data-theme="fun"] #contact {
+  background: var(--framboise);
+}
+[data-theme="fun"] footer {
+  background: var(--violet);
+  color: #ffffff;
+}
+
+/* Card shadow white in fun mode */
+[data-theme="fun"] .card {
+  box-shadow: 6px 8px 0 0 black;
+}
+
+/* Single button color */
+[data-theme="fun"] .btn-primary,
+[data-theme="fun"] .btn-secondary {
+  background: var(--ambre);
+  color: #1a1a1a;
+  box-shadow: 4px 4px 0 0 #ffffff;
+}
+
+/* Sections backgrounds */
+[data-theme="light"] #projets {
+  padding: 3rem 2rem 4rem;
+}
+[data-theme="light"] #projets {
+  padding: 3rem 2rem 4rem;
+}
+[data-theme="light"] #photo {
+  padding: 3rem 2rem 4rem;
 }
 
 /* --- Base --- */
@@ -60,7 +105,7 @@ body {
   font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -73,6 +118,19 @@ img {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* --- Theme visibility helpers --- */
+.fun-only {
+  display: none !important;
+}
+
+[data-theme="fun"] .fun-only {
+  display: revert !important;
+}
+
+[data-theme="fun"] .light-only {
+  display: none !important;
 }
 
 /* --- Utilities --- */
@@ -89,16 +147,15 @@ a {
 .uppercase {
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 .section-label {
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 13px;
+  font-size: 18px;
   color: var(--text-muted);
   margin-bottom: 12px;
-  border-bottom: 1px solid var(--gris-2);
   padding-bottom: 6px;
 }
 
@@ -108,8 +165,15 @@ a {
 }
 
 /* --- Cards hover effect --- */
+.card {
+  box-shadow: 6px 8px 0 0 var(--border-color);
+  border-radius: var(--radius);
+}
+
 .card-hover {
-  transition: transform 0.15s, outline 0.15s;
+  transition:
+    transform 0.15s,
+    outline 0.15s;
   outline: 0px solid transparent;
   cursor: pointer;
 }
@@ -123,7 +187,7 @@ a {
 .btn {
   display: inline-block;
   padding: 10px 28px;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -131,6 +195,7 @@ a {
   border-radius: var(--radius);
   cursor: pointer;
   transition: transform 0.12s;
+  box-shadow: 4px 4px 0 0 #000;
 }
 
 .btn:hover {
@@ -138,7 +203,7 @@ a {
 }
 
 .btn-primary {
-  background: var(--noir);
+  background: var(--ambre);
   color: var(--cream);
 }
 
@@ -149,28 +214,27 @@ a {
 
 /* --- Tag hover (skills) --- */
 .tag {
-  border: 2.5px solid var(--border-color);
+  border: 3px solid var(--border-color);
   padding: 4px 12px;
-  font-size: 11px;
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--text);
   border-radius: 8px;
   background: var(--cream);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   cursor: default;
-}
-
-.tag:hover {
-  background: var(--noir);
-  color: var(--cream);
 }
 
 /* --- Scroll Reveal base --- */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .reveal.visible {
@@ -198,6 +262,9 @@ a {
 
 .content-after-hero {
   padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 }
 
 @media (max-width: 768px) {
@@ -207,5 +274,7 @@ a {
 
   .content-after-hero {
     padding-top: 2.5rem;
+    gap: 3rem;
+    padding-bottom: 3rem;
   }
 }

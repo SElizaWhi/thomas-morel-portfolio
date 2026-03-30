@@ -26,7 +26,7 @@ const galleries = fs.readdirSync(photosDir)
 
   <div class="photo-grid">
     {galleries.map((gallery, i) => (
-      <figure class="hover-gallery photo-item" data-index={i}>
+      <figure class="hover-gallery photo-item card" data-index={i}>
         {gallery.images.map(img => (
           <img src={img.src} alt={img.alt} loading="lazy" class="gallery-img" />
         ))}
@@ -41,7 +41,7 @@ const galleries = fs.readdirSync(photosDir)
   <button class="lb-prev" id="lb-prev" aria-label="Précédent">&#8249;</button>
   <button class="lb-next" id="lb-next" aria-label="Suivant">&#8250;</button>
   <div class="lb-content">
-    <img id="lb-img" src="" alt="" />
+    <img id="lb-img" class="card" src="" alt="" />
   </div>
   <div class="lb-counter" id="lb-counter"></div>
 </div>
@@ -88,10 +88,14 @@ const galleries = fs.readdirSync(photosDir)
   .hover-gallery > *:hover             { opacity: 1; grid-column: 1 / -1; }
   .hover-gallery:has(:hover) > *:first-child { display: none; }
 
+  :global(#photo) {
+    padding: 3rem 0 4rem;
+  }
+
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 50px;
     margin-bottom: 3rem;
   }
 
@@ -113,7 +117,7 @@ const galleries = fs.readdirSync(photosDir)
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 10000;
+    z-index: 99999;
     background: rgba(26, 26, 26, 0.95);
     align-items: center;
     justify-content: center;
@@ -137,7 +141,7 @@ const galleries = fs.readdirSync(photosDir)
     max-height: 80vh;
     object-fit: contain;
     border: var(--border);
-    border-color: #FFFDF5;
+    border-color: black;
   }
 
   .lb-close {
@@ -191,23 +195,21 @@ const galleries = fs.readdirSync(photosDir)
 <script>
   const figures = document.querySelectorAll<HTMLElement>('.photo-item');
   const lightbox = document.getElementById('lightbox')!;
+  document.body.appendChild(lightbox);
   const lbImg = document.getElementById('lb-img') as HTMLImageElement;
   const lbClose = document.getElementById('lb-close')!;
   const lbPrev = document.getElementById('lb-prev')!;
   const lbNext = document.getElementById('lb-next')!;
   const lbCounter = document.getElementById('lb-counter')!;
 
-  const srcs = Array.from(figures).map(fig => {
-    const img = fig.querySelector<HTMLImageElement>('img');
-    return img ? img.src : '';
-  }).filter(Boolean);
-
+  let currentSrcs: string[] = [];
   let current = 0;
 
-  function openLightbox(index: number) {
+  function openLightbox(srcs: string[], index: number) {
+    currentSrcs = srcs;
     current = index;
-    lbImg.src = srcs[current];
-    lbCounter.textContent = `${current + 1} / ${srcs.length}`;
+    lbImg.src = currentSrcs[current];
+    lbCounter.textContent = `${current + 1} / ${currentSrcs.length}`;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -218,13 +220,19 @@ const galleries = fs.readdirSync(photosDir)
   }
 
   function navigate(dir: number) {
-    current = (current + dir + srcs.length) % srcs.length;
-    lbImg.src = srcs[current];
-    lbCounter.textContent = `${current + 1} / ${srcs.length}`;
+    current = (current + dir + currentSrcs.length) % currentSrcs.length;
+    lbImg.src = currentSrcs[current];
+    lbCounter.textContent = `${current + 1} / ${currentSrcs.length}`;
   }
 
-  figures.forEach((fig, i) => {
-    fig.addEventListener('click', () => openLightbox(i));
+  figures.forEach((fig) => {
+    const imgs = Array.from(fig.querySelectorAll<HTMLImageElement>('img'));
+    const srcs = imgs.map(img => img.src).filter(Boolean);
+    fig.addEventListener('click', (e) => {
+      const clickedImg = (e.target as HTMLElement).closest('img') as HTMLImageElement | null;
+      const index = clickedImg ? Math.max(0, srcs.indexOf(clickedImg.src)) : 0;
+      openLightbox(srcs, index);
+    });
   });
 
   lbClose.addEventListener('click', closeLightbox);

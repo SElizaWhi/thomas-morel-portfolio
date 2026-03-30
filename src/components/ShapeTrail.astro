@@ -1,4 +1,4 @@
-<div id="trail-container"></div>
+<div id="trail-container" class="fun-only"></div>
 
 <script>
   (function(){
@@ -88,7 +88,8 @@
         // Opacity: invisible near cursor, peaks in middle, fades at tail
         const fadeIn = Math.min(1, dist * 0.03);
         const fadeOut = Math.max(0, 1 - i / TRAIL_COUNT);
-        const op = mouseX < -100 ? 0 : fadeIn * fadeOut * 0.85;
+        const isFun = document.documentElement.dataset.theme === 'fun';
+        const op = (mouseX < -100 || !isFun) ? 0 : fadeIn * fadeOut * 0.85;
 
         // Scale: starts small near cursor, grows slightly, then shrinks at tail
         const sc = Math.max(0.2, fadeOut * 0.9);

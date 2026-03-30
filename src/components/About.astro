@@ -1,34 +1,52 @@
 ---
-const skills = ["Figma", "Photoshop", "Illustrator", "After Effects", "Lightroom", "Premiere"];
+const skills = [
+  { name: "Figma",        color: "#FFD23F", bg: "#3D2E00" },
+  { name: "Photoshop",    color: "#45B7D1", bg: "#1A2F4F" },
+  { name: "Illustrator",  color: "#F5A623", bg: "#3D1F00" },
+  { name: "After Effects",color: "#9B5DE5", bg: "#2A1045" },
+  { name: "Lightroom",    color: "#3BCEAC", bg: "#0E3528" },
+  { name: "Premiere",     color: "#45B7D1", bg: "#1A3540" },
+];
 ---
 
-<section id="about" class="about bb">
-  <div class="about-monogram">
-    <span class="monogram">TM</span>
-    <span class="location">Nîmes, FR</span>
-  </div>
+<section id="about" class="about">
+  <div class="about-card bb card">
+    <div class="about-monogram">
+      <span class="monogram">TM</span>
+      <span class="location">Nîmes, FR</span>
+    </div>
 
-  <div class="about-content">
-    <p class="section-label" style="border: none; padding: 0;" data-i18n="about.label">À propos</p>
+    <div class="about-content">
+      <p class="section-label" style="border: none; padding: 0;" data-i18n="about.label">À propos</p>
 
-    <p class="about-text" data-i18n="about.text">
-      Designer multidisciplinaire basé à Nîmes. Je conçois des identités visuelles,
-      sites web et contenus photo/vidéo pour des marques qui veulent se démarquer.
-    </p>
+      <p class="about-text" data-i18n="about.text">
+        Designer multidisciplinaire basé à Nîmes. Je conçois des identités visuelles,
+        sites web et contenus photo/vidéo pour des marques qui veulent se démarquer.
+      </p>
 
-    <div class="about-skills">
-      {skills.map(skill => (
-        <span class="tag">{skill}</span>
-      ))}
+      <div class="about-skills">
+        {skills.map(skill => (
+          <span class="tag" style={`background: ${skill.bg}; color: ${skill.color}; border-color: ${skill.color};`}>{skill.name}</span>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .about {
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-card {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 800px;
   }
 
   .about-monogram {
@@ -45,6 +63,7 @@ const skills = ["Figma", "Photoshop", "Illustrator", "After Effects", "Lightroom
     font-weight: 800;
     line-height: 1;
     letter-spacing: -3px;
+    text-shadow: 4px 5px 0 var(--vert);
   }
 
   .location {
