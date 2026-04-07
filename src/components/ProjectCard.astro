@@ -143,4 +143,33 @@ const aspectClass =
   .project-card:hover .card-info {
     color: var(--framboise);
   }
+
+  .project-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 11px 0 0 var(--border-color);
+  }
+
+  :global([data-theme="fun"]) .card-info {
+    border-top: 5px solid #1a1a1a;
+    border-radius: 0;
+    background: var(--jaune);
+  }
+
+  :global([data-theme="fun"]) .card-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  :global([data-theme="fun"]) .card-category {
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-size: 11px;
+  }
+
+  :global([data-theme="fun"]) .project-card:hover .card-info {
+    color: #1a1a1a;
+    background: var(--ambre);
+  }
 </style>

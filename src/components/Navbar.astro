@@ -363,17 +363,14 @@ const links = [
     z-index: 9000;
   }
 
-  /* === MOBILE: always use burger === */
-  @media (max-width: 640px) {
-    .navbar {
-      flex-direction: column;
-      gap: 12px;
-      align-items: flex-start;
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
     }
 
-    .nav-links {
-      flex-wrap: wrap;
-      gap: 12px;
+    .burger-nav {
+      opacity: 1;
+      pointer-events: all;
     }
   }
 </style>
