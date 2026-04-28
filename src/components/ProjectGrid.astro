@@ -52,7 +52,12 @@ const bottomRow = withImages.filter((p) => p.size === "small");
       <p class="modal-category"></p>
       <h2 class="modal-title"></h2>
       <p class="modal-description"></p>
-      <button class="modal-close-bottom" id="modal-close-bottom" aria-label="Fermer">Fermer</button>
+      <p class="modal-tech-used"></p>
+      <button
+        class="modal-close-bottom"
+        id="modal-close-bottom"
+        aria-label="Fermer">Fermer</button
+      >
     </div>
     <div class="modal-right">
       <div class="modal-images"></div>
@@ -169,11 +174,17 @@ const bottomRow = withImages.filter((p) => p.size === "small");
 
   .modal-title {
     font-size: 32px;
-    font-weight: 800;
+    font-weight: 1000;
     line-height: 1.1;
   }
 
   .modal-description {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .modal-tech-used {
     font-size: 16px;
     line-height: 1.7;
     color: var(--text-muted);
@@ -187,15 +198,17 @@ const bottomRow = withImages.filter((p) => p.size === "small");
   }
 
   .modal-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
+    columns: 3;
+    column-gap: 8px;
+  }
+
+  :global(.modal-image-item) {
+    break-inside: avoid;
+    margin-bottom: 8px;
   }
 
   .modal-images img {
     width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
     display: block;
     cursor: pointer;
     border: var(--border);
@@ -330,13 +343,13 @@ const bottomRow = withImages.filter((p) => p.size === "small");
 
   :global([data-theme="fun"]) .modal-title {
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 10000;
     letter-spacing: -1px;
     text-transform: uppercase;
   }
 
   :global([data-theme="fun"]) .modal-category {
-    font-weight: 800;
+    font-weight: 10000;
     letter-spacing: 3px;
     font-size: 13px;
     color: #1a1a1a;
@@ -344,7 +357,7 @@ const bottomRow = withImages.filter((p) => p.size === "small");
 
   :global([data-theme="fun"]) .modal-close {
     font-size: 32px;
-    font-weight: 800;
+    font-weight: 1000;
     color: #1a1a1a;
   }
 
@@ -352,7 +365,7 @@ const bottomRow = withImages.filter((p) => p.size === "small");
     border-radius: 0;
     border: 4px solid #1a1a1a;
     box-shadow: 5px 5px 0 0 #1a1a1a;
-    font-weight: 800;
+    font-weight: 1000;
     letter-spacing: 2px;
     background: var(--ambre);
   }
@@ -361,7 +374,9 @@ const bottomRow = withImages.filter((p) => p.size === "small");
     border: 4px solid #1a1a1a;
     border-radius: 0;
     box-shadow: 4px 4px 0 0 #1a1a1a;
-    transition: transform 0.12s, box-shadow 0.12s;
+    transition:
+      transform 0.12s,
+      box-shadow 0.12s;
   }
 
   :global([data-theme="fun"]) .modal-images img:hover {
@@ -379,6 +394,7 @@ const bottomRow = withImages.filter((p) => p.size === "small");
       title: p.title,
       category: p.category,
       description: p.description ?? "",
+      techUsed: p.techUsed ?? "",
       images: p.images,
     })),
   }}
@@ -386,11 +402,13 @@ const bottomRow = withImages.filter((p) => p.size === "small");
   // Modal
   const modal = document.getElementById("project-modal");
   const overlay = document.getElementById("modal-overlay");
+  const closeBtn = document.getElementById("modal-close");
   const closeBtnBottom = document.getElementById("modal-close-bottom");
   const modalCategory = modal.querySelector(".modal-category");
   const modalTitle = modal.querySelector(".modal-title");
   const modalDescription = modal.querySelector(".modal-description");
   const modalImages = modal.querySelector(".modal-images");
+  const modalTechUsed = modal.querySelector(".modal-tech-used");
 
   // Lightbox
   const lb = document.getElementById("img-lb");
@@ -434,10 +452,13 @@ const bottomRow = withImages.filter((p) => p.size === "small");
     modalCategory.textContent = project.category;
     modalTitle.textContent = project.title;
     modalDescription.textContent = project.description;
+    modalTechUsed.textContent = project.techUsed
+      ? `Logiciels : ${project.techUsed}`
+      : "";
     modalImages.innerHTML = project.images
       .map(
         (src, i) =>
-          `<img src="${src}" alt="${project.title}" loading="lazy" data-index="${i}" />`,
+          `<div class="modal-image-item"><img src="${src}" alt="${project.title}" loading="lazy" data-index="${i}" /></div>`,
       )
       .join("");
 
@@ -461,6 +482,7 @@ const bottomRow = withImages.filter((p) => p.size === "small");
   });
 
   overlay.addEventListener("click", closeModal);
+  closeBtn.addEventListener("click", closeModal);
   closeBtnBottom.addEventListener("click", closeModal);
 
   document.addEventListener("keydown", (e) => {

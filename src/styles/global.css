@@ -122,7 +122,7 @@
 /* --- fun: Section labels --- */
 [data-theme="fun"] .section-label {
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 1000;
   letter-spacing: 4px;
   border-bottom: 5px solid #1a1a1a;
   padding-bottom: 10px;
@@ -135,9 +135,11 @@
   border-radius: 0;
   box-shadow: 4px 4px 0 0 #1a1a1a;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 1000;
   letter-spacing: 2px;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
 }
 
 [data-theme="fun"] .tag:hover {
@@ -155,7 +157,9 @@
   font-family: var(--font-body);
   font-size: 16px;
   background: #ffffff;
-  transition: transform 0.12s, box-shadow 0.12s;
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s;
 }
 
 [data-theme="fun"] .form-group input:focus,
@@ -168,7 +172,7 @@
 
 [data-theme="fun"] .form-group label {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 1000;
   letter-spacing: 2px;
   color: #1a1a1a;
 }
@@ -183,11 +187,13 @@
 }
 
 [data-theme="fun"] .nav-link {
-  font-weight: 800;
+  font-weight: 1000;
   font-size: 14px;
   padding: 3px 6px;
   border: 3px solid transparent;
-  transition: border-color 0.1s, background 0.1s;
+  transition:
+    border-color 0.1s,
+    background 0.1s;
 }
 
 [data-theme="fun"] .nav-link:hover {
@@ -200,7 +206,7 @@
   border: 3px solid #1a1a1a;
   border-radius: 0;
   box-shadow: 3px 3px 0 0 #1a1a1a;
-  font-weight: 800;
+  font-weight: 1000;
 }
 
 [data-theme="fun"] .burger-btn {
@@ -214,7 +220,7 @@
 }
 
 [data-theme="fun"] .burger-link {
-  font-weight: 800;
+  font-weight: 1000;
   font-size: 20px;
   border-bottom: 3px solid #1a1a1a;
   padding: 18px 0;
@@ -227,6 +233,7 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-weight: 1000;
   background: var(--bg);
   color: var(--text);
   line-height: 1.8;
@@ -312,7 +319,7 @@ a {
   display: inline-block;
   padding: 10px 28px;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 1000;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: var(--border);

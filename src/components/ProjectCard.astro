@@ -24,7 +24,10 @@ const aspectClass =
       : "aspect-square";
 ---
 
-<article class={`project-card card card-hover bb ${aspectClass}`} data-id={projet.id}>
+<article
+  class={`project-card card card-hover bb ${aspectClass}`}
+  data-id={projet.id}
+>
   <div class="card-visual" style={`background: ${projet.bgColor};`}>
     {
       projet.image ? (
@@ -141,7 +144,7 @@ const aspectClass =
   }
 
   .project-card:hover .card-info {
-    color: var(--framboise);
+    color: var(--ambre);
   }
 
   .project-card:hover {
@@ -157,13 +160,13 @@ const aspectClass =
 
   :global([data-theme="fun"]) .card-title {
     font-size: 20px;
-    font-weight: 800;
+    font-weight: 1000;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
 
   :global([data-theme="fun"]) .card-category {
-    font-weight: 800;
+    font-weight: 1000;
     letter-spacing: 3px;
     font-size: 11px;
   }

@@ -1,7 +1,7 @@
 ---
 const links = [
-  { label: "Travaux", href: "#projets", key: "nav.work" },
-  { label: "Photo", href: "#photo", key: "nav.photo" },
+  { label: "Projets", href: "#projets", key: "nav.work" },
+  { label: "Photos", href: "#photo", key: "nav.photo" },
   { label: "À propos", href: "#about", key: "nav.about" },
   { label: "Contact", href: "#contact", key: "nav.contact" },
 ];
@@ -26,6 +26,14 @@ const links = [
       onclick="toggleLang()"
       aria-label="Switch language">EN</button
     >
+
+    <div class="theme-hint light-only" aria-hidden="true">
+      <span class="theme-hint-label">fun mode</span>
+      <svg class="theme-hint-arrow" width="42" height="30" viewBox="0 0 28 20" fill="none">
+        <path d="M2 10 Q8 2 18 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <polyline points="15,6 18,10 14,13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
 
     <button
       class="nav-theme-toggle"
@@ -156,13 +164,13 @@ const links = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 24px;
+    padding-bottom: 36px;
     margin-bottom: 0;
   }
 
   .nav-logo {
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 1000;
     letter-spacing: -1px;
     text-transform: uppercase;
     color: var(--text);
@@ -170,9 +178,9 @@ const links = [
 
   .nav-links {
     display: flex;
-    gap: 20px;
+    gap: 28px;
     align-items: center;
-    font-size: 13px;
+    font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -195,7 +203,7 @@ const links = [
     color: var(--text-muted);
     padding: 3px 8px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 900;
     letter-spacing: 1px;
     text-transform: uppercase;
     font-family: inherit;
@@ -229,6 +237,32 @@ const links = [
 
   .nav-theme-toggle:hover {
     transform: scale(1.15);
+  }
+
+  .theme-hint {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    animation: hint-nudge 1.4s ease-in-out infinite;
+  }
+
+  .theme-hint-label {
+    font-size: 13px;
+    font-weight: 1000;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .theme-hint-arrow {
+    flex-shrink: 0;
+    margin-bottom: -2px;
+  }
+
+  @keyframes hint-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
   }
 
   /* === BURGER NAV (fixed, hidden by default) === */
@@ -320,7 +354,7 @@ const links = [
 
   .burger-logo {
     font-size: 48px;
-    font-weight: 800;
+    font-weight: 1000;
     color: var(--text);
     letter-spacing: -2px;
     line-height: 1;
@@ -334,7 +368,7 @@ const links = [
 
   .burger-link {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text);

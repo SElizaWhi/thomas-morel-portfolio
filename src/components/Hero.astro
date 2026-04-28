@@ -130,7 +130,7 @@
 
   .hero-title {
     font-size: clamp(2.4rem, 5.5vw, 5.5rem);
-    font-weight: 800;
+    font-weight: 1000;
     line-height: 1.02;
     color: var(--text);
     letter-spacing: -3px;
@@ -238,13 +238,13 @@
 </style>
 
 <script>
-  const hero = document.querySelector<HTMLElement>('.hero');
-  const stickers = document.querySelectorAll<HTMLElement>('.sticker');
+  const hero = document.querySelector<HTMLElement>(".hero");
+  const stickers = document.querySelectorAll<HTMLElement>(".sticker");
   const THRESHOLD = 160;
   const MAX_PUSH = 22;
 
   function updateStickers(mouseX: number, mouseY: number) {
-    stickers.forEach(sticker => {
+    stickers.forEach((sticker) => {
       const rect = sticker.getBoundingClientRect();
       if (rect.width === 0) return; // hidden in light mode
       const cx = rect.left + rect.width / 2;
@@ -252,7 +252,7 @@
       const dx = mouseX - cx;
       const dy = mouseY - cy;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const rotate = sticker.dataset.rotate ?? '0';
+      const rotate = sticker.dataset.rotate ?? "0";
 
       if (dist < THRESHOLD && dist > 0) {
         const strength = (1 - dist / THRESHOLD) * MAX_PUSH;
@@ -265,10 +265,12 @@
     });
   }
 
-  hero?.addEventListener('mousemove', (e) => updateStickers(e.clientX, e.clientY));
-  hero?.addEventListener('mouseleave', () => {
-    stickers.forEach(s => {
-      const rotate = s.dataset.rotate ?? '0';
+  hero?.addEventListener("mousemove", (e) =>
+    updateStickers(e.clientX, e.clientY),
+  );
+  hero?.addEventListener("mouseleave", () => {
+    stickers.forEach((s) => {
+      const rotate = s.dataset.rotate ?? "0";
       s.style.transform = `rotate(${rotate}deg)`;
     });
   });

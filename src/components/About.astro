@@ -1,11 +1,11 @@
 ---
 const skills = [
-  { name: "Figma",        color: "#FFD23F", bg: "#3D2E00" },
-  { name: "Photoshop",    color: "#45B7D1", bg: "#1A2F4F" },
-  { name: "Illustrator",  color: "#F5A623", bg: "#3D1F00" },
-  { name: "After Effects",color: "#9B5DE5", bg: "#2A1045" },
-  { name: "Lightroom",    color: "#3BCEAC", bg: "#0E3528" },
-  { name: "Premiere",     color: "#45B7D1", bg: "#1A3540" },
+  { name: "Figma", color: "#FFD23F", bg: "#3D2E00" },
+  { name: "Photoshop", color: "#45B7D1", bg: "#1A2F4F" },
+  { name: "Illustrator", color: "#F5A623", bg: "#3D1F00" },
+  { name: "After Effects", color: "#9B5DE5", bg: "#2A1045" },
+  { name: "Lightroom", color: "#3BCEAC", bg: "#0E3528" },
+  { name: "Premiere", color: "#45B7D1", bg: "#1A3540" },
 ];
 ---
 
@@ -17,17 +17,31 @@ const skills = [
     </div>
 
     <div class="about-content">
-      <p class="section-label" style="border: none; padding: 0;" data-i18n="about.label">À propos</p>
+      <p
+        class="section-label"
+        style="border: none; padding: 0;"
+        data-i18n="about.label"
+      >
+        À propos
+      </p>
 
       <p class="about-text" data-i18n="about.text">
-        Designer multidisciplinaire basé à Nîmes. Je conçois des identités visuelles,
-        sites web et contenus photo/vidéo pour des marques qui veulent se démarquer.
+        Designer multidisciplinaire basé à Nîmes. Je conçois des identités
+        visuelles, sites web et contenus photo/vidéo pour des marques qui
+        veulent se démarquer.
       </p>
 
       <div class="about-skills">
-        {skills.map(skill => (
-          <span class="tag" style={`background: ${skill.bg}; color: ${skill.color}; border-color: ${skill.color};`}>{skill.name}</span>
-        ))}
+        {
+          skills.map((skill) => (
+            <span
+              class="tag"
+              style={`background: ${skill.bg}; color: ${skill.color}; border-color: ${skill.color};`}
+            >
+              {skill.name}
+            </span>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -60,7 +74,7 @@ const skills = [
 
   .monogram {
     font-size: 72px;
-    font-weight: 800;
+    font-weight: 1000;
     line-height: 1;
     letter-spacing: -3px;
     text-shadow: 4px 5px 0 var(--vert);
